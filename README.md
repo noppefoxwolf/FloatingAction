@@ -2,6 +2,8 @@
 
 FloatingAction adds a prominent trailing action button to UIKit navigation flows. Each view controller can provide a `FloatingActionItem`; the button updates as navigation moves between screens.
 
+![FloatingAction demo](Assets/floating-action-demo.gif)
+
 ## Requirements
 
 - iOS 16 or later
@@ -26,6 +28,10 @@ xcodebuild -scheme FloatingAction -showdestinations
 ## Installation
 
 In Xcode, choose **File → Add Package Dependencies**, enter `https://github.com/noppefoxwolf/FloatingAction`, and add the `FloatingAction` product to your app target.
+
+## License
+
+FloatingAction is available under the MIT license. See [LICENSE](LICENSE) for details.
 
 ## Usage
 
