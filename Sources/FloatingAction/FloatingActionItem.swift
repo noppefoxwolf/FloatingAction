@@ -89,7 +89,7 @@ public final class FloatingActionItem {
         menu: UIMenu? = nil
     ) {
         self.identifier = identifier
-        self.title = action?.title ?? title
+        self.title = action == nil ? title : action?.title
         self.image = action == nil ? image : action?.image
         self.isHidden = isHidden
         self.tintColor = tintColor
