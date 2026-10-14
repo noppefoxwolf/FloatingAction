@@ -83,4 +83,13 @@ floatingItem.trailingItem = saveAction
 - Supports `UIAction`, `UIMenu`, visibility, title, image, and tint updates for the item.
 - Leaves title, image, and tint unspecified by default so the item doesn't impose fallback content or color.
 - Matches actions across screens by `identifier` during navigation.
+- Lets each `FloatingActionNavigationController` hide its button with `showsFloatingAction`.
+
+In a split view, an app can hide the primary column's button while both columns are visible:
+
+```swift
+primaryNavigationController.showsFloatingAction = splitViewController.isCollapsed
+```
+
+The example app exposes this behavior through `showsOnlySecondaryFloatingAction` on its split view controller.
 

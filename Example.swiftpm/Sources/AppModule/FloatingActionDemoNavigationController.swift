@@ -50,22 +50,41 @@ final class FloatingActionDemoNavigationController: FloatingActionNavigationCont
 
 @MainActor
 final class FloatingActionDemoSplitViewController: UISplitViewController {
+    private weak var primaryNavigationController: FloatingActionDemoNavigationController?
+
+    var showsOnlySecondaryFloatingAction = true {
+        didSet {
+            updatePrimaryFloatingActionVisibility()
+        }
+    }
+
     init() {
         super.init(style: .doubleColumn)
         preferredDisplayMode = .oneBesideSecondary
         preferredSplitBehavior = .tile
 
-        let leadingNavigationController = FloatingActionDemoNavigationController(
+        let primaryNavigationController = FloatingActionDemoNavigationController(
             rootViewController: FloatingActionDemoViewController(level: 0, floatingActionStyle: .prominent, title: "Floating Actions")
         )
-        let trailingNavigationController = FloatingActionDemoNavigationController(
+        let secondaryNavigationController = FloatingActionDemoNavigationController(
             rootViewController: FloatingActionDemoViewController(level: 0, floatingActionStyle: .prominent, title: "Trailing")
         )
-        setViewController(leadingNavigationController, for: .primary)
-        setViewController(trailingNavigationController, for: .secondary)
+        self.primaryNavigationController = primaryNavigationController
+        setViewController(primaryNavigationController, for: .primary)
+        setViewController(secondaryNavigationController, for: .secondary)
+        updatePrimaryFloatingActionVisibility()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updatePrimaryFloatingActionVisibility()
+    }
+
+    private func updatePrimaryFloatingActionVisibility() {
+        primaryNavigationController?.showsFloatingAction = !showsOnlySecondaryFloatingAction || isCollapsed
     }
 }
