@@ -12,6 +12,14 @@ open class FloatingActionNavigationController: UINavigationController, FloatingI
     private var buttonsByIdentifier: [String: FloatingActionButton] = [:]
     private weak var currentFloatingItem: FloatingItem?
 
+    /// Controls whether this navigation controller displays its floating action button.
+    open var showsFloatingAction = true {
+        didSet {
+            guard oldValue != showsFloatingAction, let currentFloatingItem else { return }
+            render(currentFloatingItem)
+        }
+    }
+
     public override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
     }
@@ -93,7 +101,7 @@ open class FloatingActionNavigationController: UINavigationController, FloatingI
     private func render(_ item: FloatingItem, animated: Bool = false) {
         let sourceButton = activeButton?.button
 
-        guard let destinationItem = item.trailingItem else {
+        guard showsFloatingAction, let destinationItem = item.trailingItem else {
             activeButton = nil
             remove(sourceButton, animated: animated)
             return
@@ -138,7 +146,7 @@ open class FloatingActionNavigationController: UINavigationController, FloatingI
         let sourceActiveButton = activeButton
         let sourceButton = sourceActiveButton?.button
 
-        guard let destinationItem = item.trailingItem else {
+        guard showsFloatingAction, let destinationItem = item.trailingItem else {
             activeButton = nil
             guard let sourceButton else { return }
             sourceButton.isUserInteractionEnabled = false
